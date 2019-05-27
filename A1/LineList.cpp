@@ -26,7 +26,7 @@
     }
 
     //Print manipulated list
-    LineList::void print(){
+    void LineList::print(){
         Node* current;
         current = first;
         while (current != null)

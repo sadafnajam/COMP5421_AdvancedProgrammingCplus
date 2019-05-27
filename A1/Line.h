@@ -20,21 +20,41 @@
         int Capacity; //Storage Capacity of this line
 
     public:
-        Line(const char* text); //Constructs this line
-        virtual ~Line(); //Dtor
-        explicit Line(const Line&); //Copy ctor
-        const Line& operator=(const Line& rhs); //Assignment operator overloading
-        const char* cstr( ) const; //Returns this line
+        Line(const char* text); //Constructs this line assigning linePtr a pointer to a deep copy of the supplied C-string text
         
-        int length( ) const;
-        bool empty() const;
-        bool full() const;
-        int capacity() const;
-        void resize();
-        void push_back(const char& ch);
-        void pop_back();
-        friend ostream& operator<<(ostream& out, const Line& line);
-        friend istream& operator>>(istream& in, Line& line);
+        explicit Line(const Line&); //Copy ctor
+        
+        const Line& operator=(const Line& rhs); //Assignment operator overloading
+        
+        virtual ~Line(); //Dtor
+        
+        const char* cstr( ) const; //Returns c-style version of this line
+        
+        int length() const; //Returns length of this line
+        
+        bool empty() const; //Returns whether this line is empty
+        
+        bool full() const; //Returns whether this line is full
+        
+        int capacity() const; //Returns capacity of this line
+        
+        void resize(); //Doubles capacity if this line is full
+        
+        void push_back(const char& ch); //Appends ch to the end of this line
+        
+        //To handle underflow
+        class underflow_error : public std::runtime_error {
+        public:
+            explicit underflow_error (const string& what_arg);
+            explicit underflow_error (const char* what_arg);
+        };
+        
+        void pop_back(); //Removes the last character in this line
+        
+        friend ostream& operator<<(ostream& out, const Line& line); //Overloads operator << as a friend
+        
+        friend istream& operator>>(istream& in, Line& line); //Overloads operator>> as a friend
+        
     };
 
 
